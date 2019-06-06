@@ -5,7 +5,7 @@ export default class Form extends React.Component {
     state = {
         text: '',
         description: '',
-        priority: false,
+        checked: false,
         date: '',
     }
     hanldeChangeText = (e) => {
@@ -20,7 +20,7 @@ export default class Form extends React.Component {
     }
     handleChangePriority = (e) => {
         this.setState({
-            priority: e.currentTarget.checked
+            checked: e.currentTarget.checked
         })
     }
     handleChangeDate = (e) => {
@@ -30,12 +30,13 @@ export default class Form extends React.Component {
     }
     handleSubmit = (e) => {
         e.preventDefault();
-        const add = this.props.addTask()
+        const { text, description, priority, date } = this.state;
+        const add = this.props.addTask(text, description, priority, date);
         if (add) {
             this.setState({
                 text: '',
                 description: '',
-                priority: false,
+                checked: false,
                 date: '',
             })
         }
@@ -56,7 +57,7 @@ export default class Form extends React.Component {
                     </label>
                     <label htmlFor="">
                         priority
-                    <input type="checkbox" value={this.state.priority} onChange={this.handleChangePriority} />
+                    <input type="checkbox" checked={this.state.checked} onChange={this.handleChangePriority} />
                     </label>
                     <label>
                         deadline
